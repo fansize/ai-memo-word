@@ -16,13 +16,14 @@ const CHUNK_SIZE = 5;
 // 将函数改为导出
 async function processWordChunk(words: Word[], profession: Profession) {
   const startTime = performance.now();
-  console.time(`processWordChunk-${profession.id}`);
+  // 添加唯一标识符避免标签重复
+  const timeLabel = `processWordChunk-${profession.id}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+  console.time(timeLabel);
 
   const prompt = generatePrompt(words, profession);
   const completion = await client.chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
     model: 'o3-mini',
-    temperature: 0.7,
     response_format: { type: 'json_object' },
   });
 
@@ -32,7 +33,7 @@ async function processWordChunk(words: Word[], profession: Profession) {
   }
 
   const endTime = performance.now();
-  console.timeEnd(`processWordChunk-${profession.id}`);
+  console.timeEnd(timeLabel);
   console.log(`处理职业 ${profession.id} 的耗时: ${(endTime - startTime).toFixed(2)}ms`);
 
   return { profession, aiResponse };
