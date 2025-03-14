@@ -19,16 +19,90 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Code2, Stethoscope, GraduationCap, Briefcase, X, User, Plus, Palette, ScaleIcon, Github, Coffee } from 'lucide-react';
+import { Code2, Stethoscope, GraduationCap, Briefcase, X, User, Plus, Palette, ScaleIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
+
+const STRINGS = {
+  STORAGE: {
+    WORD_LEARNING_STATE: 'wordLearningState',
+    SELECTED_IDENTITIES: 'selectedIdentities',
+  },
+  ROUTES: {
+    WORDS: '/words',
+  },
+  PROFESSIONS: {
+    PROGRAMMER: {
+      id: 'programmer',
+      label: '程序员',
+      description: '程序员日常工作中常用的英语表达',
+    },
+    DESIGNER: {
+      id: 'designer',
+      label: '设计师',
+      description: '设计师工作交流中的常用英语',
+    },
+    BUSINESSMAN: {
+      id: 'businessman',
+      label: '商人',
+      description: '商务人士日常沟通中的英语用语',
+    },
+    DOCTOR: {
+      id: 'doctor',
+      label: '医生',
+      description: '医疗工作者的日常交流',
+    },
+    TEACHER: {
+      id: 'teacher',
+      label: '教师',
+      description: '教师教学和日常工作中的表达',
+    },
+    LAWYER: {
+      id: 'lawyer',
+      label: '律师',
+      description: '律师职业日常使用的英语',
+    },
+  },
+  UI: {
+    TITLES: {
+      SELECTED_PROFESSIONS: '已选择职业',
+      ADD_CUSTOM: '添加自定义职业',
+      CUSTOM_PROFESSION: '自定义身份',
+    },
+    MESSAGES: {
+      SELECT_PROFESSION: '请选择至少一个职业以开始学习',
+      NAME_REQUIRED: '请输入身份名称',
+      NAME_EXISTS: '该身份名称已存在',
+    },
+    LABELS: {
+      PROFESSION_NAME: '职业名称',
+      PROFESSION_DESCRIPTION: '职业描述（可选）',
+    },
+    PLACEHOLDERS: {
+      PROFESSION_NAME: '输入自定义职业名称',
+      PROFESSION_DESCRIPTION: '描述这个职业的特点或工作场景（选填）',
+    },
+    BUTTONS: {
+      CANCEL: '取消',
+      ADD: '添加',
+      START_LEARNING: '开始学习',
+    },
+    STATUS: {
+      SELECTED: '已选择',
+      CLICK_TO_SELECT: '点击选择',
+    },
+  },
+  DIALOG: {
+    TITLE: '添加自定义职业',
+    DESCRIPTION: '添加一个新的职业身份，我们将根据这个职业生成相关专业场景的例句，帮助你更有效地记忆单词。',
+  },
+};
 
 export default function Home() {
   const router = useRouter();
   const [selectedIdentities, setSelectedIdentities] = useState<Profession[]>([]);
   const [customIdentities, setCustomIdentities] = useState<Profession[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [coffeeDialogOpen, setCoffeeDialogOpen] = useState(false);
   const [newIdentity, setNewIdentity] = useState({
     label: '',
     description: '',
@@ -37,52 +111,51 @@ export default function Home() {
 
   // 检查是否有保存的学习状态
   useEffect(() => {
-    const savedState = localStorage.getItem("wordLearningState");
+    const savedState = localStorage.getItem(STRINGS.STORAGE.WORD_LEARNING_STATE);
     if (savedState) {
       const state = JSON.parse(savedState);
       if (state.selectedIdentities?.length > 0) {
-        // 如果有保存的状态，直接跳转到 words 页面
-        router.push("/words");
+        router.push(STRINGS.ROUTES.WORDS);
       }
     }
   }, [router]);
 
   const predefinedIdentities: Profession[] = [
     {
-      id: 'programmer',
-      label: '程序员',
+      id: STRINGS.PROFESSIONS.PROGRAMMER.id,
+      label: STRINGS.PROFESSIONS.PROGRAMMER.label,
       icon: Code2,
-      description: '程序员日常工作中常用的英语表达',
+      description: STRINGS.PROFESSIONS.PROGRAMMER.description,
     },
     {
-      id: 'designer',
-      label: '设计师',
+      id: STRINGS.PROFESSIONS.DESIGNER.id,
+      label: STRINGS.PROFESSIONS.DESIGNER.label,
       icon: Palette,
-      description: '设计师工作交流中的常用英语',
+      description: STRINGS.PROFESSIONS.DESIGNER.description,
     },
     {
-      id: 'businessman',
-      label: '商人',
+      id: STRINGS.PROFESSIONS.BUSINESSMAN.id,
+      label: STRINGS.PROFESSIONS.BUSINESSMAN.label,
       icon: Briefcase,
-      description: '商务人士日常沟通中的英语用语',
+      description: STRINGS.PROFESSIONS.BUSINESSMAN.description,
     },
     {
-      id: 'doctor',
-      label: '医生',
+      id: STRINGS.PROFESSIONS.DOCTOR.id,
+      label: STRINGS.PROFESSIONS.DOCTOR.label,
       icon: Stethoscope,
-      description: '医疗工作者的日常交流',
+      description: STRINGS.PROFESSIONS.DOCTOR.description,
     },
     {
-      id: 'teacher',
-      label: '教师',
+      id: STRINGS.PROFESSIONS.TEACHER.id,
+      label: STRINGS.PROFESSIONS.TEACHER.label,
       icon: GraduationCap,
-      description: '教师教学和日常工作中的表达',
+      description: STRINGS.PROFESSIONS.TEACHER.description,
     },
     {
-      id: 'lawyer',
-      label: '律师',
+      id: STRINGS.PROFESSIONS.LAWYER.id,
+      label: STRINGS.PROFESSIONS.LAWYER.label,
       icon: ScaleIcon,
-      description: '律师职业日常使用的英语',
+      description: STRINGS.PROFESSIONS.LAWYER.description,
     },
   ];
 
@@ -106,13 +179,12 @@ export default function Home() {
 
   const handleCustomIdentityAdd = () => {
     if (!newIdentity.label.trim()) {
-      setError('请输入身份名称');
+      setError(STRINGS.UI.MESSAGES.NAME_REQUIRED);
       return;
     }
 
-    // 检查是否已存在相同名称的身份
     if (allIdentities.some((identity) => identity.label === newIdentity.label.trim())) {
-      setError('该身份名称已存在');
+      setError(STRINGS.UI.MESSAGES.NAME_EXISTS);
       return;
     }
 
@@ -120,7 +192,7 @@ export default function Home() {
       id: `custom-${Date.now()}`,
       label: newIdentity.label.trim(),
       icon: User,
-      description: newIdentity.description.trim() || '自定义身份',
+      description: newIdentity.description.trim() || STRINGS.UI.TITLES.CUSTOM_PROFESSION,
       isCustom: true,
     };
 
@@ -140,7 +212,7 @@ export default function Home() {
   };
 
   const handleStart = () => {
-    localStorage.setItem('selectedIdentities', JSON.stringify(selectedIdentities));
+    localStorage.setItem(STRINGS.STORAGE.SELECTED_IDENTITIES, JSON.stringify(selectedIdentities));
     router.push('/words');
   };
 
@@ -163,27 +235,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
       {/* 更紧凑的顶部区域 */}
-      <div className="relative overflow-hidden bg-primary/5 py-10">
-        <div className="container relative z-10 mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <h1 className="mb-3 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-4xl font-extrabold leading-none text-transparent sm:text-5xl whitespace-nowrap">
-              AI-Driven Vocabulary by Identity
-            </h1>
-            <p className="mx-auto mb-6 max-w-2xl text-base text-muted-foreground">
-              基于 AI 技术，根据你的职业背景生成贴合实际工作场景的英语例句，让记忆单词更有效、更有意义
-            </p>
-          </motion.div>
-        </div>
-        
-        {/* 装饰元素 */}
-        <div className="absolute -right-20 top-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl"></div>
-        <div className="absolute -left-20 top-40 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl"></div>
-      </div>
+     
 
       <div className="container mx-auto px-4 py-8">
         {/* Selected Identities - 更紧凑设计 */}
@@ -191,7 +243,7 @@ export default function Home() {
           <h3 className="mb-2 text-sm font-medium text-muted-foreground">已选择职业 ({selectedIdentities.length}/3):</h3>
           <div className="flex flex-wrap gap-2">
             {selectedIdentities.length === 0 ? (
-              <p className="text-sm text-muted-foreground/70">请选择至少一个职业以开始学习</p>
+              <p className="text-sm text-muted-foreground/70">{STRINGS.UI.MESSAGES.SELECT_PROFESSION}</p>
             ) : (
               selectedIdentities.map((identity) => (
                 <Badge 
@@ -218,18 +270,18 @@ export default function Home() {
           <DialogTrigger asChild>
             <Button variant="outline" className="mb-4">
               <Plus className="mr-2 h-4 w-4" />
-              添加自定义职业
+              {STRINGS.UI.TITLES.ADD_CUSTOM}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>添加自定义职业</DialogTitle>
-              <DialogDescription>添加一个新的职业身份，我们将根据这个职业生成相关专业场景的例句，帮助你更有效地记忆单词。</DialogDescription>
+              <DialogTitle>{STRINGS.DIALOG.TITLE}</DialogTitle>
+              <DialogDescription>{STRINGS.DIALOG.DESCRIPTION}</DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="space-y-2">
                 <Label htmlFor="identity-name">
-                  职业名称 <span className="text-destructive">*</span>
+                  {STRINGS.UI.LABELS.PROFESSION_NAME} <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="identity-name"
@@ -238,17 +290,17 @@ export default function Home() {
                     setNewIdentity((prev) => ({ ...prev, label: e.target.value }));
                     setError('');
                   }}
-                  placeholder="输入自定义职业名称"
+                  placeholder={STRINGS.UI.PLACEHOLDERS.PROFESSION_NAME}
                   className="col-span-3"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="identity-description">职业描述（可选）</Label>
+                <Label htmlFor="identity-description">{STRINGS.UI.LABELS.PROFESSION_DESCRIPTION}</Label>
                 <Textarea
                   id="identity-description"
                   value={newIdentity.description}
                   onChange={(e) => setNewIdentity((prev) => ({ ...prev, description: e.target.value }))}
-                  placeholder="描述这个职业的特点或工作场景（选填）"
+                  placeholder={STRINGS.UI.PLACEHOLDERS.PROFESSION_DESCRIPTION}
                 />
               </div>
               {error && <p className="text-sm text-destructive">{error}</p>}
@@ -262,9 +314,9 @@ export default function Home() {
                   setError('');
                 }}
               >
-                取消
+                {STRINGS.UI.BUTTONS.CANCEL}
               </Button>
-              <Button onClick={handleCustomIdentityAdd}>添加</Button>
+              <Button onClick={handleCustomIdentityAdd}>{STRINGS.UI.BUTTONS.ADD}</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -381,47 +433,13 @@ export default function Home() {
             onClick={handleStart}
           >
             <span className="relative z-10 flex items-center gap-2">
-              开始学习
+              {STRINGS.UI.BUTTONS.START_LEARNING}
               <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </span>
             <span className="absolute inset-0 -translate-y-full bg-gradient-to-r from-primary to-blue-600 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"></span>
           </Button>
         </motion.div>
 
-        {/* Footer Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
-          className="mt-12 flex justify-center gap-6 text-muted-foreground"
-        >
-          <a
-            href="https://github.com/winterfx/prowords"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 transition-colors hover:opacity-80"
-          >
-            <Github className="h-6 w-6 text-[#333333] dark:text-white" />
-          </a>
-          <Dialog open={coffeeDialogOpen} onOpenChange={setCoffeeDialogOpen}>
-            <DialogTrigger asChild>
-              <button className="flex items-center gap-2 transition-colors hover:opacity-80">
-                <Coffee className="h-6 w-6 text-[#C0742E]" />
-              </button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle>Buy Me a Coffee</DialogTitle>
-                <DialogDescription>
-                  扫码支持一下，谢谢！
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex justify-center p-4">
-                <img src="/api/qrcode" alt="Buy Me a Coffee QR Code" className="max-h-64 w-auto" />
-              </div>
-            </DialogContent>
-          </Dialog>
-        </motion.div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-# ProWords
+# AI Memo Words
 
 <p align="center">
   <img src="https://img.shields.io/badge/AI%20Powered-GPT-blue?style=for-the-badge&logo=openai" alt="AI Powered" />
@@ -8,25 +8,29 @@
 
 <p align="center">🇨🇳 <a href="#chinese">中文</a> | 🇺🇸 <a href="#english">English</a></p>
 
----
+## AI Memo Words - 智能场景化单词学习助手
 
-<h2 id="chinese">中文介绍</h2>
+将单词学习与职业场景完美结合，让每个例句都贴近您的工作实际。AI Memo Words 通过 AI 技术，为不同职业人群打造个性化的单词记忆体验，让枯燥的背单词变成提升职业技能的有趣过程。
 
-## ProWords - AI + 身份，让单词记忆更有趣、更有效
+🎯 **场景化记忆**
+- 支持多个预设职业（程序员、设计师、医生等）
+- 可自定义职业场景
+- 同时选择多个职业身份，获得多维度例句
 
-ProWords 是一个基于人工智能的专业化英语学习平台，为不同职业的人群提供量身定制的英语学习体验。通过整合先进的AI技术，为用户创建职业相关的例句和学习内容。
+📚 **专业词库**
+- 精选主流考试词汇（CET4/6、GRE、TOEFL、IELTS、考研）
+- 按章节科学规划（每章 20 词）
+- 系统化学习路径
 
-### 🌟 特色
+🤖 **AI 智能助手**
+- 为每个单词生成符合职业场景的例句
+- 一键重新生成，直到满意为止
+- 确保例句既准确又实用
 
-🎯 **职业场景定制**：支持多种职业身份组合以及自定义身份，生成贴近工作场景的例句
-
-📚 **丰富词库支持**：覆盖 CET4/6、GRE、TOEFL、IELTS、考研等多个考试词库
-
-🤖 **AI 智能例句**：不满意可一键重新生成，直到符合你的需求
-
-💾 **进度自动保存**：随时可以继续上次的学习进度
-
-🌓 **深色模式**：提供舒适的阅读体验
+💾 **学习助手**
+- 自动记录学习进度
+- 智能统计完成情况
+- 随时继续上次学习
 
 ### 💻 技术栈
 
@@ -76,28 +80,6 @@ ProWords 是一个基于人工智能的专业化英语学习平台，为不同�
 - 流畅的过渡动画
 - 直观的进度展示
 
-### 📍 开始使用
-
-1. 克隆项目
-```bash
-git clone <repository-url>
-cd prowords
-```
-
-2. 安装依赖
-```bash
-pnpm install
-```
-
-3. 启动开发服务器
-```bash
-pnpm run dev
-```
-
-4. 访问应用
-```
-http://localhost:3000
-```
 
 ### 💯 使用流程
 
@@ -114,159 +96,8 @@ http://localhost:3000
 5. 查看AI生成的职业相关例句
 6. 不满意可一键重新生成例句
 
-### ☕ 支持项目
 
-<p align="center">
-  <a href="https://www.buymeacoffee.com/winterfx" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50" width="180" >
-    <br>
-    <img src="./public/coffee/c.png" >
-  </a>
-</p>
 
-如果这个项目对你有帮助，欢迎请我喝杯咖啡支持一下！您的支持将帮助我持续改进这个项目。
-
----
-
-<h2 id="english">English Introduction</h2>
-
-## ProWords - AI + Professional Identity: Making Word Memorization More Engaging and Effective
-
-ProWords is an AI-powered English learning platform that provides tailored learning experiences for professionals across various industries. By integrating advanced AI technology, it creates career-relevant example sentences and learning content for users.
-
-### 🌟 Features
-
-🎯 **Professional Scenario Customization**: Support for multiple professional identities and custom roles, generating examples that closely match work scenarios
-
-📚 **Rich Vocabulary Support**: Covers multiple exam vocabularies including CET4/6, GRE, TOEFL, IELTS, and Kaoyan
-
-🤖 **AI-Powered Examples**: One-click regeneration until you get the perfect example sentences
-
-💾 **Auto-Save Progress**: Continue from where you left off at any time
-
-🌓 **Dark Mode**: Provides a comfortable reading experience
-
-### 💻 Tech Stack
-
-- **Frontend Framework**: Next.js 14
-- **UI Components**: Tailwind CSS + Shadcn/ui
-- **Animation**: Framer Motion
-- **AI Integration**: Advanced language model API integration
-- **State Management**: React Hooks
-- **Local Storage**: localStorage
-
-### 📚 Key Features
-
-#### Career Selection
-- Preset professional types (programmer, designer, doctor, etc.)
-- Support for custom profession descriptions
-- Multiple profession selection for diverse example sentences
-
-#### AI Learning System
-- Comprehensive Dictionary Support:
-  - CET-4/6 (College English Test)
-  - GRE (Graduate Record Examination)
-  - TOEFL (Test of English as a Foreign Language)
-  - IELTS (International English Language Testing System)
-  - PTE (Pearson Test of English)
-  - Kaoyan (Chinese Postgraduate Entrance Examination)
-- Chapter-based learning
-- Automatic progress saving
-- AI-powered example sentence generation
-- Sentence regeneration functionality
-
-### 📸 Screenshots
-
-<div align="center">
-  <img src="./public/screenshot/s3.png" alt="ProWords Screenshot 1" width="800" />
-  <p><em>Main Interface - Professional Background Selection</em></p>
-  
-  <img src="./public/screenshot/s1.png" alt="ProWords Screenshot 2" width="800" />
-  <p><em>Word Learning - AI-Generated Professional Examples</em></p>
-  
-  <img src="./public/screenshot/s2.png" alt="ProWords Screenshot 3" width="800" />
-  <p><em>Progress Tracking - Chapter Completion Statistics</em></p>
-</div>
-
-#### Interface Features
-- Dark mode support
-- Responsive design
-- Smooth transition animations
-- Intuitive progress visualization
-
-### 📍 Getting Started
-
-1. Clone the project
-```bash
-git clone <repository-url>
-cd prowords
-```
-
-2. Install dependencies
-```bash
-pnpm install
-```
-
-3. Start the development server
-```bash
-pnpm run dev
-```
-
-4. Visit the application
-```
-http://localhost:3000
-```
-
-### 💯 Usage Flow
-
-1. Choose your professional identity
-2. Select vocabulary type:
-   - CET-4/6 (College English Test)
-   - GRE (Graduate Record Examination)
-   - TOEFL (Test of English as a Foreign Language)
-   - IELTS (International English Language Testing System)
-   - PTE (Pearson Test of English)
-   - Kaoyan (Chinese Postgraduate Entrance Examination)
-3. Choose learning chapter
-4. Start learning words
-5. View AI-generated profession-related examples
-6. One-click regeneration if you're not satisfied
-
-### ☕ Support the Project
-
-<p align="center">
-  <a href="https://www.buymeacoffee.com/winterfx" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50" width="180" >
-    <br>
-    <img src="./public/coffee/c.png" >
-  </a>
-</p>
-
-If this project has been helpful to you, consider buying me a coffee! Your support will help me continue improving this project.
-
-### 🔧 Environment Setup
-
-1. Create a `.env.local` file in the project root:
-
-```bash
-# Create .env.local file
-touch .env.local
-```
-
-2. Add the following required environment variables to the `.env.local` file:
-
-```bash
-NEXT_PUBLIC_BASE_URL=your_api_base_url
-NEXT_PUBLIC_OPENAI_API_KEY=your_api_key
-```
-
-Example:
-```bash
-NEXT_PUBLIC_BASE_URL=
-NEXT_PUBLIC_OPENAI_API_KEY=
-```
-
-These environment variables are essential for the application to connect to the required APIs.
 
 ## 📜 License
 
